@@ -58,7 +58,7 @@ object Form2: TForm2
     Width = 129
     Height = 17
     DataField = 'data'
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
   end
   object Label6: TLabel
     Left = 512
@@ -73,7 +73,7 @@ object Form2: TForm2
     Width = 401
     Height = 23
     DataField = 'nome'
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
     TabOrder = 0
   end
   object DBEdit2: TDBEdit
@@ -82,7 +82,7 @@ object Form2: TForm2
     Width = 401
     Height = 23
     DataField = 'celular'
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
     TabOrder = 1
   end
   object DBNavigator1: TDBNavigator
@@ -90,7 +90,7 @@ object Form2: TForm2
     Top = 80
     Width = 410
     Height = 25
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
     TabOrder = 2
   end
   object DBMemo1: TDBMemo
@@ -99,7 +99,7 @@ object Form2: TForm2
     Width = 399
     Height = 161
     DataField = 'observacoes'
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
     TabOrder = 3
   end
   object DBGrid1: TDBGrid
@@ -107,7 +107,7 @@ object Form2: TForm2
     Top = 189
     Width = 401
     Height = 260
-    DataSource = DM.dsContatos
+    DataSource = DataModule2.dsContatos
     TabOrder = 4
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -147,7 +147,6 @@ object Form2: TForm2
         Title.Font.Height = -12
         Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
-        Width = 64
         Visible = True
       end
       item
@@ -168,6 +167,5 @@ object Form2: TForm2
     Width = 401
     Height = 23
     TabOrder = 5
-    OnChange = txtBuscaChange
   end
 end

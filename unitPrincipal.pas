@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.DBCtrls, Vcl.Buttons, Data.DB, Vcl.Grids, Vcl.DBGrids;
+  Vcl.DBCtrls, Vcl.Buttons, Data.DB, Vcl.Grids, Vcl.DBGrids, unitDados;
 
 type
   TForm2 = class(TForm)
@@ -36,11 +36,9 @@ implementation
 
 {$R *.dfm}
 
-uses unitDM;
-
 procedure TForm2.txtBuscaChange(Sender: TObject);
 begin
-  DM.tbContatos.Locate('nome', txtBusca.Text, [loPartialKey]); // P/ a barra de pesquisa
+  DataModule2.tbContatos.Locate('nome', txtBusca.Text, [loPartialKey]);
 end;
 
 end.
