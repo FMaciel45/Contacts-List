@@ -8,7 +8,8 @@ uses
   Vcl.DBCtrls, Vcl.Buttons, Data.DB, Vcl.Grids, Vcl.DBGrids, unitDados;
 
 type
-  TForm2 = class(TForm)
+  TForm2 = class(TForm) // Classe do formulário principal da aplicação
+    // Componentes de interface
     Label1: TLabel;
     DBEdit1: TDBEdit;
     Label2: TLabel;
@@ -22,7 +23,7 @@ type
     DBGrid1: TDBGrid;
     txtBusca: TEdit;
     Label6: TLabel;
-    procedure txtBuscaChange(Sender: TObject);
+    procedure txtBuscaChange(Sender: TObject); // Evento de mudança no campo de busca
   private
     { Private declarations }
   public
@@ -30,15 +31,15 @@ type
   end;
 
 var
-  Form2: TForm2;
+  Form2: TForm2; // Variável global da instância do formulário
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm2.txtBuscaChange(Sender: TObject);
+procedure TForm2.txtBuscaChange(Sender: TObject); // Evento disparado quando o texto da busca muda
 begin
-  DataModule2.tbContatos.Locate('nome', txtBusca.Text, [loPartialKey]);
+  DataModule2.tbContatos.Locate('nome', txtBusca.Text, [loPartialKey]); // Busca registros com correspondência parcial no campo "nome"
 end;
 
 end.

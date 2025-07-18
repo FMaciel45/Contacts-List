@@ -127,19 +127,17 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="unitPrincipal.pas">
-            <Form>Form2</Form>
-            <FormType>dfm</FormType>
+            <Form>/ Form2</Form>
         </DCCReference>
         <DCCReference Include="unitConexao.pas">
             <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="unitDados.pas">
             <Form>DataModule2</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="unitConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

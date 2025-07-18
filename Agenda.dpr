@@ -2,17 +2,35 @@ program Agenda;
 
 uses
   Vcl.Forms,
-  unitPrincipal in 'unitPrincipal.pas' {Form2},
-  unitConexao in 'unitConexao.pas' {DataModule1: TDataModule},
-  unitDados in 'unitDados.pas' {DataModule2: TDataModule};
+  unitPrincipal in 'unitPrincipal.pas', // Form2
+  unitConexao in 'unitConexao.pas', // DataModule1: TDataModule
+  unitDados in 'unitDados.pas', // DataModule2: TDataModule
+  unitConfig in 'unitConfig.pas';
 
 {$R *.res}
 
 begin
-  Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TDataModule1, DataModule1);
-  Application.CreateForm(TDataModule2, DataModule2);
-  Application.Run;
+  Application.Initialize; // Inicialização padrão da aplicação VCL
+  Application.MainFormOnTaskbar := True; // Habilita o recurso de cada formulário ter sua própria taskbar em Windows 7+
+
+  // Carrega a configuração do BD -> permite alterar a configuração sem recompilar o código
+  var Config := TDatabaseConfig.LoadFromJson('config.json');
+
+  try
+    // Deve-se, primeiro, criar os DataModules
+    DataModule1 := TDataModule1.Create(Application, Config); // Cria a instância do DataModule de conexão injetando a configuração
+
+    // Registra os DataModules na aplicação
+    Application.CreateForm(TDataModule1, DataModule1);
+    Application.CreateForm(TDataModule2, DataModule2);
+
+    // Após isso criar os DataModules, deve-se criar o form principal
+    Application.CreateForm(TForm2, Form2);
+
+    Application.Run;
+  finally
+    // Garante que o objeto de configuração seja liberado
+    Config.Free;
+  end;
+
 end.
