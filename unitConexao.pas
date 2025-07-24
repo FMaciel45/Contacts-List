@@ -11,19 +11,20 @@ uses
 
 type
   TDataModule1 = class(TDataModule)
-    Conexao: TFDConnection; // Componente principal de conexão do FireDAC
+    Conexao: TFDConnection;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink; // Compoonente p/ verificar o driver MySQL
     procedure DataModuleCreate(Sender: TObject);
   private
-    FConfig: TDatabaseConfig; // Armazena a configuração injetada
-    procedure ConfigurarConexao; // Método interno p/ configurar a conexão
+    FConfig: TDatabaseConfig;
+    procedure ConfigurarConexao;
+    procedure VerificarDriverMySQL; // Verificar o driver
   public
-    // Construtor p/ receber a configuração por injeção de dependência
     constructor Create(AOwner: TComponent; AConfig: TDatabaseConfig); reintroduce;
-    destructor Destroy; override; // Garante o fechamento seguro da conexão
+    destructor Destroy; override;
   end;
 
 var
-  DataModule1: TDataModule1; // Variável global
+  DataModule1: TDataModule1;
 
 implementation
 
@@ -33,43 +34,59 @@ implementation
 
 constructor TDataModule1.Create(AOwner: TComponent; AConfig: TDatabaseConfig);
 begin
-  FConfig := AConfig; // Armazena a configuração recebida por injeção de dependência
-  inherited Create(AOwner); // Chama o construtor da classe pai (TDataModule)
+  FConfig := AConfig;
+  inherited Create(AOwner);
 end;
 
 destructor TDataModule1.Destroy;
 begin
-  // Garante que a conexão está fechada antes de destruir o objeto
   if Conexao.Connected then
     Conexao.Connected := False;
-  inherited Destroy;
+  inherited;
 end;
 
-procedure TDataModule1.DataModuleCreate(Sender: TObject); // Evento disparado quando o DataModule é criado
+procedure TDataModule1.VerificarDriverMySQL;
 begin
-  ConfigurarConexao; // Configura a conexão assim que o DataModule é criado
+  // Caminho do libmysql.dll
+  FDPhysMySQLDriverLink1.VendorLib := 'C:\Windows\SysWOW64\libmysql.dll';
+
+  // Verifica se o arquivo existe
+  if not FileExists(FDPhysMySQLDriverLink1.VendorLib) then
+    raise Exception.Create('Driver MySQL não encontrado em: ' + FDPhysMySQLDriverLink1.VendorLib);
 end;
 
 procedure TDataModule1.ConfigurarConexao;
 begin
   try
-    Conexao.Params.Clear; // Limpa parâmetros existentes
+    // Primeiro verifica o driver
+    VerificarDriverMySQL;
 
-    // Configura os parâmetros básicos da conexão a partir do objeto FConfig
-    Conexao.Params.Add('Database=' + FConfig.Database);
-    Conexao.Params.Add('User_Name=' + FConfig.UserName);
-    Conexao.Params.Add('Password=' + FConfig.Password);
-    Conexao.Params.Add('DriverID=' + FConfig.DriverID);
+    // Configuração completa da conexão
+    with Conexao do
+    begin
+      Params.Clear;
 
-    // Estabelece a conexão com o BD
-    Conexao.Connected := True;
+      // Configuração básica
+      DriverName := 'MySQL';
+      Params.Values['Server'] := 'localhost';
+      Params.Values['Database'] := FConfig.Database;
+      Params.Values['User_Name'] := FConfig.UserName;
+      Params.Values['Password'] := FConfig.Password;
+      Params.Values['Port'] := '3306'; // Porta padrão do MySQL
+
+      // Tenta conectar
+      Connected := True;
+    end;
   except
     on E: Exception do
-    begin
-      // Captura a exceção e lança uma mensagem de erro personalizada
-      raise Exception.Create('Erro ao configurar conexão com o banco: ' + E.Message);
-    end;
+      raise Exception.Create('Erro na conexão MySQL: ' + E.Message);
   end;
+end;
+
+procedure TDataModule1.DataModuleCreate(Sender: TObject);
+begin
+  if Assigned(FConfig) then
+    ConfigurarConexao;
 end;
 
 end.

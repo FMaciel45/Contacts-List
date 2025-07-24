@@ -1,9 +1,9 @@
-object Form2: TForm2
+object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Agenda de Contatos'
-  ClientHeight = 553
-  ClientWidth = 950
+  ClientHeight = 572
+  ClientWidth = 923
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,9 +14,9 @@ object Form2: TForm2
   object Label1: TLabel
     Left = 32
     Top = 24
-    Width = 229
+    Width = 308
     Height = 32
-    Caption = 'Agenda de contatos'
+    Caption = 'Agenda de contatos - Criar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -24
@@ -85,30 +85,22 @@ object Form2: TForm2
     DataSource = DataModule2.dsContatos
     TabOrder = 1
   end
-  object DBNavigator1: TDBNavigator
-    Left = 34
-    Top = 80
-    Width = 410
-    Height = 25
-    DataSource = DataModule2.dsContatos
-    TabOrder = 2
-  end
   object DBMemo1: TDBMemo
-    Left = 31
+    Left = 34
     Top = 288
     Width = 399
     Height = 161
     DataField = 'observacoes'
     DataSource = DataModule2.dsContatos
-    TabOrder = 3
+    TabOrder = 2
   end
   object DBGrid1: TDBGrid
     Left = 512
-    Top = 189
-    Width = 401
-    Height = 260
+    Top = 203
+    Width = 369
+    Height = 246
     DataSource = DataModule2.dsContatos
-    TabOrder = 4
+    TabOrder = 3
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -12
@@ -164,8 +156,40 @@ object Form2: TForm2
   object txtBusca: TEdit
     Left = 512
     Top = 160
-    Width = 401
+    Width = 369
     Height = 23
+    TabOrder = 4
+  end
+  object Button1: TButton
+    Left = 358
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Excluir'
     TabOrder = 5
+  end
+  object Button2: TButton
+    Left = 32
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Novo'
+    TabOrder = 6
+  end
+  object Button3: TButton
+    Left = 277
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Criar'
+    TabOrder = 7
+  end
+  object Editar: TButton
+    Left = 512
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Editar'
+    TabOrder = 8
   end
 end

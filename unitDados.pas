@@ -9,9 +9,9 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, unitConexao;
 
 type
-  TDataModule2 = class(TDataModule) // DataModule responsável pela gestão dos dados da aplicação
-    tbContatos: TFDTable; // Componente de tabela do FireDAC
-    dsContatos: TDataSource; // Fonte de dados p/ componentes visuais
+  TDataModule2 = class(TDataModule)
+    tbContatos: TFDTable;
+    dsContatos: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -20,7 +20,7 @@ type
   end;
 
 var
-  DataModule2: TDataModule2; // Variável global da instância
+  DataModule2: TDataModule2;
 
 implementation
 
@@ -28,20 +28,25 @@ implementation
 
 {$R *.dfm}
 
-// Evento disparado quando o DataModule é criado
 procedure TDataModule2.DataModuleCreate(Sender: TObject);
 begin
-  if not Assigned(DataModule1) then // Verificação de dependência
+  // Verificação robusta da conexão
+  if not Assigned(DataModule1) then
     raise Exception.Create('DataModule1 não foi criado');
 
-  tbContatos.Connection := DataModule1.Conexao; // Configuração de conexão
-
-  // Ativa a conexão se não estiver ativa -> garante que está ativa antes de acessar os dados
   if not DataModule1.Conexao.Connected then
-    DataModule1.Conexao.Connected := True;
+    raise Exception.Create('Conexão com MySQL não está ativa');
 
-  tbContatos.TableName := 'contatos'; // nome da tabela dentro do BD
-  tbContatos.Active := True; // Abre a tabela p/ acessar os dados
+  // Configura a tabela
+  tbContatos.Connection := DataModule1.Conexao;
+  tbContatos.TableName := 'contatos';
+
+  try
+    tbContatos.Active := True;
+  except
+    on E: Exception do
+      raise Exception.Create('Erro ao abrir tabela: ' + E.Message);
+  end;
 end;
 
 end.
