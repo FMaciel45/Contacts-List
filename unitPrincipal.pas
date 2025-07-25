@@ -9,27 +9,27 @@ uses
 
 type
   TForm1 = class(TForm)
-    Label1: TLabel;
-    DBEdit1: TDBEdit;
-    Label2: TLabel;
-    DBEdit2: TDBEdit;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    DBText1: TDBText;
-    DBMemo1: TDBMemo;
-    DBGrid1: TDBGrid;
-    txtBusca: TEdit;
-    Label6: TLabel;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Editar: TButton;
+    titleLabel: TLabel;
+    inputNomeCreate: TDBEdit;
+    nomeLabel: TLabel;
+    inputCelCreate: TDBEdit;
+    celLabel: TLabel;
+    observLabel: TLabel;
+    altLabel: TLabel;
+    showDate: TDBText;
+    inputObservCreate: TDBMemo;
+    contactsGrid: TDBGrid;
+    inputTxtBusca: TEdit;
+    buscaLabel: TLabel;
+    btnExcluirCont: TButton;
+    btnNovoCont: TButton;
+    btnCriarCont: TButton;
+    btnEditarCont: TButton;
     procedure txtBuscaChange(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure EditarClick(Sender: TObject);
+    procedure btnExcluirContClick(Sender: TObject);
+    procedure btnNovoContClick(Sender: TObject);
+    procedure btnCriarContClick(Sender: TObject);
+    procedure btnEditarContClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -48,10 +48,10 @@ uses unitEdicao;
 
 procedure TForm1.txtBuscaChange(Sender: TObject);
 begin
-  DataModule2.tbContatos.Locate('nome', txtBusca.Text, [loPartialKey]);
+  DataModule2.tbContatos.Locate('nome', inputTxtBusca.Text, [loPartialKey]);
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnExcluirContClick(Sender: TObject);
 begin
   // Excluir registro
   if not DataModule2.tbContatos.IsEmpty then
@@ -71,17 +71,17 @@ begin
     ShowMessage('Nenhum contato selecionado');
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnNovoContClick(Sender: TObject);
 begin
   // Novo registro
   DataModule2.tbContatos.Append;
-  DBEdit1.SetFocus;
+  inputNomeCreate.SetFocus;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.btnCriarContClick(Sender: TObject);
 begin
-  // Confirmar novo registro
-  if DataModule2.tbContatos.State in [dsInsert, dsEdit] then
+  // Confirmar novo registro (persistir no BD)
+  if DataModule2.tbContatos.State in [dsInsert, dsEdit] then // Verifica se está em modo de inserção ou edição
   begin
     try
       DataModule2.tbContatos.Post;
@@ -96,14 +96,18 @@ begin
   end;
 end;
 
-procedure TForm1.EditarClick(Sender: TObject);
+procedure TForm1.btnEditarContClick(Sender: TObject);
 begin
-  // Abrir formulário de edição (modal - agora - que poderá virar uma aba)
+  // Editar - direcionar à tela de "Editar" como modal
   if not DataModule2.tbContatos.IsEmpty then
   begin
     Form2 := TForm2.Create(Self);
     try
-      Form2.ShowModal;
+      if Form2.ShowModal = mrOk then
+      begin
+        // Atualiza o grid se necessário
+        DataModule2.tbContatos.Refresh;
+      end;
     finally
       Form2.Free;
     end;

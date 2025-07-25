@@ -8,7 +8,7 @@ uses
 type
   TDatabaseConfig = class // Classe que encapsula as configurações de conexão com o BD
   private
-    // Campos que armazenam parâmetros da conexão
+    // Campos que armazenam os parâmetros da conexão
     FDatabase: string;
     FUserName: string;
     FPassword: string;

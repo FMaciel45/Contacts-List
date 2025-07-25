@@ -7,6 +7,7 @@ object DataModule1: TDataModule1
       'User_Name=root'
       'Password=toor'
       'DriverID=MySQL')
+    Connected = True
     LoginPrompt = False
     Left = 72
     Top = 80

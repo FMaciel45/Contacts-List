@@ -2,16 +2,20 @@ program Agenda;
 
 uses
   Vcl.Forms,
-  unitPrincipal in 'unitPrincipal.pas', // Form2
-  unitConexao in 'unitConexao.pas', // DataModule1: TDataModule
-  unitDados in 'unitDados.pas', // DataModule2: TDataModule
-  unitConfig in 'unitConfig.pas';
+  unitPrincipal in 'unitPrincipal.pas' {/ Form1},
+  unitConexao in 'unitConexao.pas' {DataModule1: TDataModule},
+  unitDados in 'unitDados.pas' {DataModule2: TDataModule},
+  unitConfig in 'unitConfig.pas',
+  unitEdicao in 'unitEdicao.pas' {Form1};
 
 {$R *.res}
+{$IFDEF DEBUG}
+{$ENDIF}
 
 begin
   Application.Initialize; // Inicialização padrão da aplicação VCL
   Application.MainFormOnTaskbar := True; // Habilita o recurso de cada formulário ter sua própria taskbar em Windows 7+
+  System.ReportMemoryLeaksOnShutdown := True; // Relatórios sobre vazamento de memória
 
   // Carrega a configuração do BD -> permite alterar a configuração sem recompilar o código
   var Config := TDatabaseConfig.LoadFromJson('config.json');
@@ -22,6 +26,7 @@ begin
 
     // Registra os DataModules na aplicação
     Application.CreateForm(TDataModule2, DataModule2);
+    Application.CreateForm(TForm1, Form1);
 
     // Após isso criar os DataModules, deve-se criar o form principal
     Application.CreateForm(TForm1, Form1);

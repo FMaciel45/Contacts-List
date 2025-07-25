@@ -11,33 +11,33 @@ object Form2: TForm2
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Label2: TLabel
+  object editNomeLabel: TLabel
     Left = 32
-    Top = 139
-    Width = 96
+    Top = 128
+    Width = 94
     Height = 15
-    Caption = 'Nome do Contato'
+    Caption = 'Nome do contato'
   end
-  object Label3: TLabel
+  object editObservLabel: TLabel
     Left = 32
-    Top = 203
-    Width = 37
-    Height = 15
-    Caption = 'Celular'
-  end
-  object Label4: TLabel
-    Left = 32
-    Top = 269
+    Top = 272
     Width = 67
     Height = 15
     Caption = 'Observa'#231#245'es'
   end
-  object Label1: TLabel
+  object editCelLabel: TLabel
+    Left = 32
+    Top = 200
+    Width = 37
+    Height = 15
+    Caption = 'Celular'
+  end
+  object editTitleLabel: TLabel
     Left = 32
     Top = 24
-    Width = 418
+    Width = 320
     Height = 32
-    Caption = 'Agenda de contatos - Editar Contato'
+    Caption = 'Agenda de contatos - Editar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -24
@@ -45,41 +45,49 @@ object Form2: TForm2
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object DBEdit1: TDBEdit
+  object inputDescEdit: TDBMemo
     Left = 32
-    Top = 160
-    Width = 401
-    Height = 23
+    Top = 293
+    Width = 409
+    Height = 148
+    DataField = 'observacoes'
+    DataSource = DataModule2.dsContatos
     TabOrder = 0
   end
-  object DBEdit2: TDBEdit
+  object inputCelularEdit: TDBEdit
     Left = 32
-    Top = 224
-    Width = 401
+    Top = 221
+    Width = 409
     Height = 23
+    DataField = 'celular'
+    DataSource = DataModule2.dsContatos
     TabOrder = 1
   end
-  object DBMemo1: TDBMemo
+  object inputNomeEdit: TDBEdit
     Left = 32
-    Top = 290
-    Width = 401
-    Height = 143
+    Top = 149
+    Width = 409
+    Height = 23
+    DataField = 'nome'
+    DataSource = DataModule2.dsContatos
     TabOrder = 2
   end
-  object Button1: TButton
-    Left = 561
-    Top = 159
-    Width = 97
+  object btnConfirmarAlt: TButton
+    Left = 528
+    Top = 148
+    Width = 75
     Height = 25
     Caption = 'Confirmar'
     TabOrder = 3
+    OnClick = btnConfirmarAltClick
   end
-  object Button2: TButton
-    Left = 721
-    Top = 159
-    Width = 96
+  object btnCancelarAlt: TButton
+    Left = 760
+    Top = 148
+    Width = 75
     Height = 25
     Caption = 'Cancelar'
     TabOrder = 4
+    OnClick = btnCancelarAltClick
   end
 end

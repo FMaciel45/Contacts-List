@@ -2,7 +2,9 @@ object DataModule2: TDataModule2
   Height = 480
   Width = 645
   object tbContatos: TFDTable
+    Active = True
     IndexFieldNames = 'id'
+    Connection = DataModule1.Conexao
     ResourceOptions.AssignedValues = [rvEscapeExpand]
     TableName = 'agendadecontatosdb.contatos'
     Left = 176
